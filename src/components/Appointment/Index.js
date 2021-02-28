@@ -64,7 +64,7 @@ export default function Appointment (props) {
   }
 
   return (
-    <article className="appointment">
+    <article className="appointment"  data-testid="appointment">
       <Header time={time}/>
         {mode === EMPTY && <Empty onAdd={onAdd} />}
         {mode === SHOW && (
@@ -96,7 +96,9 @@ export default function Appointment (props) {
             interviewer={props.interview.interviewer.id} 
             interviewers={props.interviewers} 
             onCancel={onCancel} 
-            onSave={save}/>}
+            onSave={save}
+            // editMode={true}
+          />}
         {mode === ERROR_DELETE && 
           <Error 
             message={errDeleteMsg} 

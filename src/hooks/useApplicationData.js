@@ -26,8 +26,8 @@ export default function useApplicationData(){
   }, []);
 
   function bookInterview(id, interview) {
-
-    const days = updateSpots(id, true)
+    
+   const days = updateSpotsRemaining(id, true)
 
     const appointment = {
       ...state.appointments[id],
@@ -39,13 +39,14 @@ export default function useApplicationData(){
     };
 
     return axios.put(`/api/appointments/${id}`, appointment)
-    .then(() =>  setState({...state, appointments, days}))
+    .then(() =>  setState({...state, interview, appointments, days}))
     .catch(err => console.log(err))
   }
 
   function cancelInterview(id) {
 
-    const days = updateSpots(id, false)
+    const days = updateSpotsRemaining(id, false)
+
 
     const appointment = {
       ...state.appointments[id],
@@ -57,17 +58,18 @@ export default function useApplicationData(){
     };
 
     return axios.delete(`/api/appointments/${id}`)
-    .then(() => setState({...state, interview: null, days}))
+    .then(() => setState({...state, id, appointments, interview: null, days}))
     .catch(err => console.log(err))
+
   }
 
-  function updateSpots(id, decrement) {
+  function updateSpotsRemaining(id, decrement) {
     const dayOfAppt = state.days.filter(day => day.appointments.includes(id))
     const dayOfApptId = dayOfAppt[0].id;
     const dayOfApptObj = state.days[dayOfApptId - 1]
     let numSpots = dayOfApptObj.spots
    
-    if (decrement) {
+    if (decrement && state.appointments[id].interview === null) {
       numSpots --
     } else if (!decrement) {
       numSpots ++

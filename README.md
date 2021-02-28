@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+  Interview Scheduler is a single page web application built with React, using Postgres for database management. 
+
 ## Setup
 
 Install dependencies with `npm install`.
