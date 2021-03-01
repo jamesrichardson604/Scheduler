@@ -25,7 +25,7 @@ const errSaveMsg = 'Could not book appointment';
 
 export default function Appointment (props) {
 
-  const { id, time, interview, interviews, bookInterview, cancelInterview } = props
+  const {time, bookInterview, cancelInterview } = props
 
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
@@ -53,6 +53,10 @@ export default function Appointment (props) {
   }
 
   function save(name, interviewer) {
+    if (!interviewer) {
+      console.log('caught')
+      return
+    }
     const interview = {
       student: name,
       interviewer
@@ -97,7 +101,6 @@ export default function Appointment (props) {
             interviewers={props.interviewers} 
             onCancel={onCancel} 
             onSave={save}
-            // editMode={true}
           />}
         {mode === ERROR_DELETE && 
           <Error 

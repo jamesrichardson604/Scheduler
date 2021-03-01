@@ -8,7 +8,7 @@ export default function useVisualMode(initial) {
     setMode(mode)
     if (replace) {
       setHistory(history)
-    } else {
+    } else if (!replace) {
       setHistory([...history, mode])
     }
   }
@@ -16,7 +16,7 @@ export default function useVisualMode(initial) {
   function back() { 
     let prevHistArr = history.slice(0, -1)
     let prevMode = prevHistArr.slice(-1)[0]
-    setHistory(prevHistArr)
+    setHistory(prevMode)
     if (history.length > 1) {
       setMode(prevMode)
     }
